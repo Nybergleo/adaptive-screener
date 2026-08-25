@@ -1192,12 +1192,22 @@ function selectedFromSpec(spec){
       supports_window: Boolean(spec.supports_window || String(spec.expression || '').includes('{fpo_start}') || String(spec.expression || '').includes('{n_quarters}')),
     };
   }
+  const normalizeSavedFilterValue = (value, defaultValue) => {
+    const raw = value ?? '';
+    if(raw === '') return defaultValue ?? '';
+    const rawNumber = Number(raw);
+    const defaultNumber = Number(defaultValue);
+    if(Number.isFinite(rawNumber) && Number.isFinite(defaultNumber) && defaultNumber !== 0 && rawNumber === defaultNumber * 1000000) {
+      return String(defaultValue);
+    }
+    return raw;
+  };
   return {
     ...base,
     input: spec.input ?? base.default_input,
     output: spec.output ?? base.default_output,
-    min: spec.min ?? base.default_min ?? '',
-    max: spec.max ?? base.default_max ?? '',
+    min: normalizeSavedFilterValue(spec.min, base.default_min),
+    max: normalizeSavedFilterValue(spec.max, base.default_max),
     text: spec.text ?? base.default_text ?? '',
     n_quarters: Number(spec.n_quarters || 12),
   };
