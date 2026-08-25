@@ -1,0 +1,117 @@
+{
+  "templates": [
+    {
+      "currency": "EUR",
+      "description": "Saved 2026-08-25, 12:19:01",
+      "fields": [
+        {
+          "alias": "market_cap",
+          "definition": "Current market capitalization in the selected currency.",
+          "expression": "cur_mkt_cap(currency={currency})",
+          "field_type": "numeric",
+          "input": true,
+          "key": "market_cap",
+          "label": "Market capitalization",
+          "max": "",
+          "min": "500000000",
+          "n_quarters": 12,
+          "output": true,
+          "supports_window": false,
+          "text": ""
+        }
+      ],
+      "geography": "western_europe",
+      "key": "user_min_mkc_1787653141611",
+      "label": "min mkc",
+      "sort_direction": "Ascending",
+      "sort_field": "market_cap",
+      "user_template": true
+    },
+    {
+      "currency": "EUR",
+      "description": "Saved 2026-08-25, 12:32:03",
+      "fields": [
+        {
+          "alias": "market_cap",
+          "definition": "Current market capitalization in the selected currency.",
+          "expression": "cur_mkt_cap(currency={currency})",
+          "field_type": "numeric",
+          "input": true,
+          "key": "market_cap",
+          "label": "Market capitalization",
+          "max": "",
+          "min": "500000000",
+          "n_quarters": 12,
+          "output": true,
+          "supports_window": false,
+          "text": ""
+        },
+        {
+          "alias": "ebit_ltm",
+          "definition": "Reported LTM EBIT in the selected currency.",
+          "expression": "ebit(fpt=LTM, currency={currency})",
+          "field_type": "numeric",
+          "input": true,
+          "key": "ebit_ltm",
+          "label": "LTM EBIT",
+          "max": "",
+          "min": "",
+          "n_quarters": 12,
+          "output": true,
+          "supports_window": false,
+          "text": ""
+        }
+      ],
+      "geography": "western_europe",
+      "key": "user_ag_1_1787653923995",
+      "label": "AG 1",
+      "sort_direction": "Ascending",
+      "sort_field": "market_cap",
+      "user_template": true
+    },
+    {
+      "currency": "EUR",
+      "description": "Saved 2026-08-25, 15:02:30",
+      "fields": [
+        {
+          "alias": "market_cap",
+          "definition": "Current market capitalization in the selected currency.",
+          "expression": "cur_mkt_cap(currency={currency})",
+          "field_type": "numeric",
+          "input": true,
+          "key": "market_cap",
+          "label": "Market capitalization",
+          "max": "",
+          "min": "500000000",
+          "n_quarters": 12,
+          "output": true,
+          "supports_window": false,
+          "text": ""
+        },
+        {
+          "alias": "ebit_margin_ltm",
+          "definition": "Reported LTM operating margin. Bloomberg oper_margin maps to EBIT divided by revenue times 100.",
+          "expression": "oper_margin(fpt=LTM)",
+          "field_type": "numeric",
+          "input": true,
+          "key": "ebit_margin_ltm",
+          "label": "LTM EBIT / operating margin",
+          "max": "",
+          "min": "10",
+          "n_quarters": 12,
+          "output": true,
+          "supports_window": false,
+          "text": ""
+        }
+      ],
+      "geography": "western_europe",
+      "key": "user_leo_1_1787662950389",
+      "label": "Leo 1",
+      "sort_direction": "Ascending",
+      "sort_field": "market_cap",
+      "user_template": true
+    }
+  ],
+  "updated_at": "2026-08-25T15:02:30",
+  "version": 1
+}
