@@ -131,8 +131,8 @@ FIELD_CATALOG = [
         "ebit_margin_ltm",
         "oper_margin(fpt=LTM)",
         "numeric",
-        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio (0.25 = 25%). Min/Max filters apply to this decimal output.",
-        default_min="0.10",
+        "Input: security identifier plus fpt=LTM period selector. Output units: percent points (25 = 25%). Min/Max filters apply to this percent output.",
+        default_min="10",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -141,8 +141,8 @@ FIELD_CATALOG = [
         "ebita_margin_ltm",
         "ebita_margin(fpt=LTM)",
         "numeric",
-        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio. EBITA margin is EBIT plus amortization as a share of revenue. Min/Max filters apply to this decimal output.",
-        default_min="0.11",
+        "Input: security identifier plus fpt=LTM period selector. Output units: percent points. EBITA margin is EBIT plus amortization as a share of revenue. Min/Max filters apply to this percent output.",
+        default_min="11",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -151,7 +151,7 @@ FIELD_CATALOG = [
         "ebitda_margin_ltm",
         "ebitda_to_revenue(fpt=LTM)",
         "numeric",
-        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio. This ratio field returns EBITDA divided by revenue. Min/Max filters apply to this decimal output.",
+        "Input: security identifier plus fpt=LTM period selector. Output units: percent points. This ratio field returns EBITDA divided by revenue as a percent output. Min/Max filters apply to this percent output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -160,8 +160,8 @@ FIELD_CATALOG = [
         "margin_stability_pp",
         "std(oper_margin(fpt=Q, fpo=range({fpo_start},0)))",
         "numeric",
-        "Input: time series of quarterly oper_margin decimal ratios from fpo=range({fpo_start},0). Output units: decimal ratio standard deviation, i.e. margin percentage points as a decimal (0.04 = 4 pp). Min/Max filters apply to this scalar output. Window controls the number of quarters.",
-        default_max="0.04",
+        "Input: time series of quarterly oper_margin values from fpo=range({fpo_start},0). Output units: percentage points of margin standard deviation (4 = 4 pp). Min/Max filters apply to this scalar percent-point output. Window controls the number of quarters.",
+        default_max="4",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -212,7 +212,7 @@ FIELD_CATALOG = [
         "free_cash_flow_yield",
         "free_cash_flow_yield",
         "numeric",
-        "Input: security identifier. Output units: decimal ratio (0.04 = 4%). Min/Max filters apply to this decimal yield output.",
+        "Input: security identifier. Output units: percent points (4 = 4%). Min/Max filters apply to this percent output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -221,7 +221,7 @@ FIELD_CATALOG = [
         "dividend_yield",
         "dividend_yield",
         "numeric",
-        "Input: security identifier. Output units: decimal ratio (0.015 = 1.5%). Min/Max filters apply to this decimal yield output.",
+        "Input: security identifier. Output units: percent points (1.5 = 1.5%). Min/Max filters apply to this percent output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -230,7 +230,7 @@ FIELD_CATALOG = [
         "return_on_capital_employed",
         "return_on_capital_employed",
         "numeric",
-        "Input: security identifier. Output units: decimal ratio (3.22 = 322%). Uses return_on_capital_employed because return_on_capital does not resolve in BQL. Min/Max filters apply to this decimal output.",
+        "Input: security identifier. Output units: percent points (322 = 322%). Uses return_on_capital_employed because return_on_capital does not resolve in BQL. Min/Max filters apply to this percent output.",
         format_type="percent_points",
     ),
     FieldSpec(
