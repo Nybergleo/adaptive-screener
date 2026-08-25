@@ -76,24 +76,40 @@ class FieldSpec:
 
 
 IDENTITY_FIELDS = [
-    FieldSpec("name", "Company name", "name", "name()", "text", "Bloomberg company/security name.", default_input=False),
+    FieldSpec(
+        "name",
+        "Company name",
+        "name",
+        "name()",
+        "text",
+        "Input: security identifier. Output units: string company/security name.",
+        default_input=False,
+    ),
     FieldSpec(
         "cntry_of_domicile",
         "Country of domicile",
         "cntry_of_domicile",
         "cntry_of_domicile()",
         "text",
-        "Bloomberg country-of-domicile country code.",
+        "Input: security identifier. Output units: string ISO-style country code for country of domicile.",
         default_input=False,
     ),
-    FieldSpec("crncy", "Trading currency", "crncy", "crncy()", "text", "Bloomberg security currency.", default_input=False),
+    FieldSpec(
+        "crncy",
+        "Trading currency",
+        "crncy",
+        "crncy()",
+        "text",
+        "Input: security identifier. Output units: string ISO currency code.",
+        default_input=False,
+    ),
     FieldSpec(
         "sector",
         "BICS sector",
         "sector",
         "classification_name(BICS, 1)",
         "text",
-        "Bloomberg BICS level 1 sector.",
+        "Input: security identifier plus BICS taxonomy level 1. Output units: string sector name.",
         default_input=False,
     ),
     FieldSpec(
@@ -102,7 +118,7 @@ IDENTITY_FIELDS = [
         "industry_group",
         "classification_name(BICS, 2)",
         "text",
-        "Bloomberg BICS level 2 industry group.",
+        "Input: security identifier plus BICS taxonomy level 2. Output units: string industry-group name.",
         default_input=False,
     ),
 ]
@@ -115,8 +131,8 @@ FIELD_CATALOG = [
         "ebit_margin_ltm",
         "oper_margin(fpt=LTM)",
         "numeric",
-        "Reported LTM operating margin. Bloomberg oper_margin maps to EBIT divided by revenue times 100.",
-        default_min="10",
+        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio (0.25 = 25%). Min/Max filters apply to this decimal output.",
+        default_min="0.10",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -125,8 +141,8 @@ FIELD_CATALOG = [
         "ebita_margin_ltm",
         "ebita_margin(fpt=LTM)",
         "numeric",
-        "Reported LTM EBITA margin. Coverage can be uneven across companies.",
-        default_min="11",
+        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio. EBITA margin is EBIT plus amortization as a share of revenue. Min/Max filters apply to this decimal output.",
+        default_min="0.11",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -135,7 +151,7 @@ FIELD_CATALOG = [
         "ebitda_margin_ltm",
         "ebitda_to_revenue(fpt=LTM)",
         "numeric",
-        "Reported LTM EBITDA divided by revenue.",
+        "Input: security identifier plus fpt=LTM period selector. Output units: decimal ratio. This ratio field returns EBITDA divided by revenue. Min/Max filters apply to this decimal output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -144,8 +160,8 @@ FIELD_CATALOG = [
         "margin_stability_pp",
         "std(oper_margin(fpt=Q, fpo=range({fpo_start},0)))",
         "numeric",
-        "Standard deviation of quarterly operating margin over the selected trailing quarter window. Lower means more stable margins.",
-        default_max="4",
+        "Input: time series of quarterly oper_margin decimal ratios from fpo=range({fpo_start},0). Output units: decimal ratio standard deviation, i.e. margin percentage points as a decimal (0.04 = 4 pp). Min/Max filters apply to this scalar output. Window controls the number of quarters.",
+        default_max="0.04",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -154,7 +170,7 @@ FIELD_CATALOG = [
         "fwd_pe_blended_12m",
         "pe_ratio(fpt=BT, fpo=1)",
         "numeric",
-        "Bloomberg blended 12-month forward consensus P/E.",
+        "Input: security identifier plus fpt=BT and fpo=1 forward period selector. Output units: dimensionless valuation multiple (22.4 = 22.4x). Min/Max filters apply to this multiple.",
         default_max="25",
     ),
     FieldSpec(
@@ -163,7 +179,7 @@ FIELD_CATALOG = [
         "ebit_ltm",
         "ebit(fpt=LTM, currency={currency})",
         "numeric",
-        "Reported LTM EBIT in the selected currency.",
+        "Input: security identifier plus fpt=LTM period selector and selected currency. Output units: millions of {currency}. Min/Max filters apply to this monetary output in millions.",
     ),
     FieldSpec(
         "market_cap",
@@ -171,8 +187,8 @@ FIELD_CATALOG = [
         "market_cap",
         "cur_mkt_cap(currency={currency})",
         "numeric",
-        "Current market capitalization in the selected currency.",
-        default_min="500000000",
+        "Input: security identifier plus selected currency. Output units: millions of {currency}. Min/Max filters apply to this monetary output in millions.",
+        default_min="500",
     ),
     FieldSpec(
         "turnover",
@@ -180,7 +196,7 @@ FIELD_CATALOG = [
         "turnover",
         "turnover(currency={currency})",
         "numeric",
-        "Bloomberg turnover in the selected currency.",
+        "Input: security identifier plus selected currency. Output units: millions of {currency}, representing daily trading value. Min/Max filters apply to this monetary output in millions.",
     ),
     FieldSpec(
         "revenue_ltm",
@@ -188,7 +204,7 @@ FIELD_CATALOG = [
         "revenue_ltm",
         "sales_rev_turn(fpt=LTM, currency={currency})",
         "numeric",
-        "Reported LTM revenue in the selected currency.",
+        "Input: security identifier plus fpt=LTM period selector and selected currency. Output units: millions of {currency}. Min/Max filters apply to this revenue output in millions.",
     ),
     FieldSpec(
         "free_cash_flow_yield",
@@ -196,7 +212,7 @@ FIELD_CATALOG = [
         "free_cash_flow_yield",
         "free_cash_flow_yield",
         "numeric",
-        "Bloomberg free cash flow yield.",
+        "Input: security identifier. Output units: decimal ratio (0.04 = 4%). Min/Max filters apply to this decimal yield output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -205,16 +221,16 @@ FIELD_CATALOG = [
         "dividend_yield",
         "dividend_yield",
         "numeric",
-        "Bloomberg indicated dividend yield.",
+        "Input: security identifier. Output units: decimal ratio (0.015 = 1.5%). Min/Max filters apply to this decimal yield output.",
         format_type="percent_points",
     ),
     FieldSpec(
         "return_on_capital",
-        "Return on capital",
-        "return_on_capital",
-        "return_on_capital",
+        "Return on capital employed",
+        "return_on_capital_employed",
+        "return_on_capital_employed",
         "numeric",
-        "Bloomberg return on capital metric.",
+        "Input: security identifier. Output units: decimal ratio (3.22 = 322%). Uses return_on_capital_employed because return_on_capital does not resolve in BQL. Min/Max filters apply to this decimal output.",
         format_type="percent_points",
     ),
     FieldSpec(
@@ -223,7 +239,7 @@ FIELD_CATALOG = [
         "sector",
         "classification_name(BICS, 1)",
         "text",
-        "Bloomberg BICS level 1 sector. Use exact names or comma-separated values.",
+        "Input: security identifier plus BICS taxonomy level 1. Output units: string sector name. Text filters use exact equals or comma-separated in-list values.",
         default_output=False,
         format_type="text",
     ),
@@ -233,7 +249,7 @@ FIELD_CATALOG = [
         "industry_group",
         "classification_name(BICS, 2)",
         "text",
-        "Bloomberg BICS level 2 industry group. Use exact names or comma-separated values.",
+        "Input: security identifier plus BICS taxonomy level 2. Output units: string industry-group name. Text filters use exact equals or comma-separated in-list values.",
         default_output=False,
         format_type="text",
     ),
@@ -1336,8 +1352,8 @@ function renderSelected(){
         <label><input type="checkbox" data-i="${i}" data-k="input" ${f.input?'checked':''}> Input</label>
         <label><input type="checkbox" data-i="${i}" data-k="output" ${f.output?'checked':''}> Output</label>
         ${f.field_type === 'numeric'
-          ? `<label>Min<input data-i="${i}" data-k="min" value="${escapeHtml(f.min)}"></label><label>Max<input data-i="${i}" data-k="max" value="${escapeHtml(f.max)}"></label>${f.supports_window ? `<label>Window<input data-i="${i}" data-k="n_quarters" value="${escapeHtml(f.n_quarters)}"></label>` : `<span></span>`}<span></span>`
-          : `<label class="wide">Equals<input data-i="${i}" data-k="text" value="${escapeHtml(f.text)}"></label>`}
+          ? `<label>Min output<input data-i="${i}" data-k="min" value="${escapeHtml(f.min)}"></label><label>Max output<input data-i="${i}" data-k="max" value="${escapeHtml(f.max)}"></label>${f.supports_window ? `<label>Window quarters<input data-i="${i}" data-k="n_quarters" value="${escapeHtml(f.n_quarters)}"></label>` : `<span></span>`}<span></span>`
+          : `<label class="wide">Output equals / in list<input data-i="${i}" data-k="text" value="${escapeHtml(f.text)}"></label>`}
         <button class="danger" data-remove="${i}">Remove</button>
       </div>
       <button class="secondary" data-help="${i}" style="margin-top:8px">?</button>
